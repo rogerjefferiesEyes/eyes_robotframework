@@ -1,17 +1,20 @@
-Eyes Robot Framework SDK
+Eyes Robot Framework SDK for Robot Framework v3.1.2
 ========================
-|pypi version| |pypi downloads| |Black Formatter|
 
-Applitools Eyes SDK For Robot Framework
+Applitools Eyes SDK For Robot Framework v3.1.2
+
+**NOTE: This is a customized version of the Eyes SDK for Robot Framework, slightly modified for backward compatibility with Robot Framework v3.1.2.
+Using this version of the Eyes SDK for Robot Framework requires a Python environment with carefully selected dependency package versions.**
+
 
 Installation
 ------------
 
-Install the eyes-robot SDK:
+Install the modified eyes-robot SDK from this repo (best done inside of a fresh virtual environment):
 
 ::
 
-    pip install eyes-robotframework
+    pip install --no-deps https://raw.githubusercontent.com/rogerjefferiesEyes/eyes_robotframework/master/requirements.txt
 
 Docs
 -----
