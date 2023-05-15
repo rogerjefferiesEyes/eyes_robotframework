@@ -14,7 +14,7 @@ Install the modified eyes-robot SDK from this repo (best done inside of a fresh 
 
 ::
 
-    pip install --no-deps https://raw.githubusercontent.com/rogerjefferiesEyes/eyes_robotframework/master/requirements.txt
+    pip install --no-deps -r https://raw.githubusercontent.com/rogerjefferiesEyes/eyes_robotframework/master/requirements.txt
 
 Docs
 -----
