@@ -86,13 +86,13 @@ class SuitePostProcessManager(object):
             robot_test.status = robot_test_status
             check_keywords = (
                 kw
-                for kw in robot_test.body
+                for kw in robot_test.keywords
                 if kw.libname == "EyesLibrary" and kw.kwname in CHECK_KEYWORDS_LIST
             )
             for check_keyword, step_info in zip(check_keywords, steps_info):
                 if step_info["is_different"]:
                     check_keyword.status = "FAIL"
-                check_keyword.body.create_message(
+                check_keyword.messages.create(
                     message="Check result url: " + step_info["url"],
                     timestamp=get_timestamp(),
                 )
