@@ -10,11 +10,21 @@ Using this version of the Eyes SDK for Robot Framework requires a Python environ
 Installation
 ------------
 
-Install the modified eyes-robot SDK from this repo (best done inside of a fresh virtual environment):
+**Optional** - Install the recommended dependency versions (best done inside of a fresh virtual environment):
 
 ::
 
     pip install --no-deps -r https://raw.githubusercontent.com/rogerjefferiesEyes/eyes_robotframework/master/requirements.txt
+
+
+
+Install the Eyes SDK For Robot Framework v3.1.2:
+
+::
+
+    pip install --no-deps git+https://github.com/rogerjefferiesEyes/eyes_robotframework.git@v5.11.2
+
+
 
 Docs
 -----
