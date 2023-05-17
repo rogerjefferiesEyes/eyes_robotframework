@@ -18,7 +18,7 @@ Installation
 
 
 
-Install the Eyes SDK For Robot Framework v3.1.2:
+Install Eyes SDK v5.11.2 For Robot Framework v3.1.2:
 
 ::
 
