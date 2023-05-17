@@ -7,7 +7,6 @@ decorator==4.4.2
 eyes-common==5.0.0
 eyes-core==5.0.0
 eyes-images==5.18.0
-git+https://github.com/rogerjefferiesEyes/eyes_robotframework@v5.11.2
 eyes-selenium==5.18.0
 flask-marshmallow==0.14.0
 idna==2.9
@@ -24,6 +23,7 @@ robotframework==3.1.2
 robotframework-appiumlibrary==1.5.0.7
 robotframework-pythonlibcore==2.2.1
 robotframework-seleniumlibrary==3.3.1
+robotframework-selenium2library==3.3.1
 selenium==3.141.0
 six==1.16.0
 structlog==19.2.0
