@@ -14,7 +14,7 @@ from selenium.webdriver.remote.webelement import By
 try:
     from SeleniumLibrary import SeleniumLibrary
     USE_SELENIUM2LIBRARY = False
-except ImportError:
+except (ImportError, ModuleNotFoundError) as error:
     from Selenium2Library import SeleniumLibrary
     USE_SELENIUM2LIBRARY = True
     
