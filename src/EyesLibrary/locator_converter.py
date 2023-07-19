@@ -11,7 +11,13 @@ except ImportError:
 from AppiumLibrary import AppiumLibrary
 from AppiumLibrary.locators import ElementFinder as AppiumElementFinder
 from selenium.webdriver.remote.webelement import By
-from SeleniumLibrary import SeleniumLibrary
+try:
+    from SeleniumLibrary import SeleniumLibrary
+    USE_SELENIUM2LIBRARY = False
+except (ImportError, ModuleNotFoundError) as error:
+    from Selenium2Library import SeleniumLibrary
+    USE_SELENIUM2LIBRARY = True
+    
 from SeleniumLibrary.locators import ElementFinder as SeleniumElementFinder
 
 from applitools.common.validators import is_webelement

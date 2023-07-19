@@ -135,8 +135,8 @@ class EyesLibrary(DynamicCore):
     _selected_runner = None  # type: Optional[SelectedRunner]
     config_path = None  # type: Optional[Text]
     supported_library_names_by_runner = {
-        SelectedRunner.web: ("SeleniumLibrary", "AppiumLibrary"),
-        SelectedRunner.web_ufg: ("SeleniumLibrary",),
+        SelectedRunner.web: ("SeleniumLibrary", "Selenium2Library", "AppiumLibrary"),
+        SelectedRunner.web_ufg: ("SeleniumLibrary","Selenium2Library"),
         SelectedRunner.mobile_native: ("AppiumLibrary",),
         SelectedRunner.native_mobile_grid: ("AppiumLibrary",),
     }
