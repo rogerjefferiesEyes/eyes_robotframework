@@ -6,7 +6,13 @@ from typing import TYPE_CHECKING, Text
 from AppiumLibrary import AppiumLibrary
 from robot.api import logger as robot_logger
 from robot.api.deco import keyword  # noqa
-from SeleniumLibrary import SeleniumLibrary
+try:
+    from SeleniumLibrary import SeleniumLibrary
+    USE_SELENIUM2LIBRARY = False
+except ImportError:
+    from Selenium2Library import SeleniumLibrary
+    USE_SELENIUM2LIBRARY = True
+
 
 from applitools.common.utils import cached_property
 from applitools.selenium import ClassicRunner, VisualGridRunner
