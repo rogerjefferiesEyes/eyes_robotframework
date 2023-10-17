@@ -14,6 +14,9 @@ from applitools.common.test_results import TestResultsStatus
 
 from .keywords_list import CHECK_KEYWORDS_LIST
 
+from .base import LibraryComponent
+from .ApplitoolsBase64TestResultHandler import ApplitoolsBase64TestResultHandler
+
 if TYPE_CHECKING:
     from robot.running import TestSuite
 
@@ -93,8 +96,9 @@ class SuitePostProcessManager(object):
                 if step_info["is_different"]:
                     check_keyword.status = "FAIL"
                 check_keyword.messages.create(
-                    message="Check result url: " + step_info["url"],
+                    message=step_info["step_result_html"],
                     timestamp=get_timestamp(),
+                    html=True
                 )
 
         self.robot_test_suite.metadata[
@@ -137,6 +141,17 @@ class EyesToRobotTestResultsManager(object):
         self.test_id_to_suite[self.configure.user_test_id] = result
         self.configure.user_test_id = None
 
+    def get_test_image_html(self, test_results_summary, user_test_id, step_index):
+        # Load test configuration, so the API Key can be used as a 'view key' to download images for html report
+        lib_component = LibraryComponent(self)
+        test_config = lib_component.get_configuration()
+        test_image_html = ''
+        for test_result in test_results_summary.results:
+            if(test_result.user_test_id == user_test_id):
+                base64_test_result_handler = ApplitoolsBase64TestResultHandler(test_result.test_results, test_config.api_key)
+                test_image_html += base64_test_result_handler.get_base64_table_rows_html(step_index + 1) # Get html with embedded base64 images
+        return test_image_html
+
     def register_eyes_test_results_on_close(self, test_results_summary):
         # type: (TestResultsSummary) -> None
         if not self.configure.propagate_eyes_test_results:
@@ -157,9 +172,10 @@ class EyesToRobotTestResultsManager(object):
                         dict(
                             is_different=step.is_different,
                             url=step.app_urls.step,
+                            step_result_html=self.get_test_image_html(test_results_summary, test_results.user_test_id, step_index)
                         )
-                        for step in test_results.steps_info
-                    ],
+                        for step_index,step in enumerate(test_results.steps_info)
+                    ]
                 )
             )
         save_suites(self.path_to_test_results, suites)
