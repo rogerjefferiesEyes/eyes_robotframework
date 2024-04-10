@@ -17,6 +17,8 @@ from .keywords_list import CHECK_KEYWORDS_LIST
 from .base import LibraryComponent
 from .ApplitoolsBase64TestResultHandler import ApplitoolsBase64TestResultHandler
 
+from robot.model.keyword import Keyword
+
 if TYPE_CHECKING:
     from robot.running import TestSuite
 
@@ -70,6 +72,20 @@ class SuitePostProcessManager(object):
         suites_results_data = restore_suite(path_to_test_results)
         self.current_suite = suites_results_data[self.robot_test_suite.name]
 
+    def get_eyes_keywords(self, item):
+        if hasattr(item, 'keywords') and len(item.keywords) > 0:
+            for kw in item.keywords:
+                if kw.libname == "EyesLibrary" and kw.kwname in CHECK_KEYWORDS_LIST:
+                    yield kw
+                if hasattr(kw, 'keywords') and len(kw.keywords) > 0:
+                    yield from self.get_eyes_keywords(kw)
+
+    def get_parent_keywords(self, item):
+        if hasattr(item, 'parent') and isinstance(item.parent, Keyword):
+            yield item.parent
+            if hasattr(item.parent, 'parent'):
+                yield from self.get_parent_keywords(item.parent)
+
     def process_suite(self):
         # type: () -> None
         if not self.current_suite:
@@ -87,14 +103,12 @@ class SuitePostProcessManager(object):
                 continue  # skip non-eyes tests
             robot_test_status, steps_info = robot_test_name_to_status[robot_test.name]
             robot_test.status = robot_test_status
-            check_keywords = (
-                kw
-                for kw in robot_test.keywords
-                if kw.libname == "EyesLibrary" and kw.kwname in CHECK_KEYWORDS_LIST
-            )
+            check_keywords = self.get_eyes_keywords(robot_test)
             for check_keyword, step_info in zip(check_keywords, steps_info):
                 if step_info["is_different"]:
                     check_keyword.status = "FAIL"
+                    for parent_keyword in self.get_parent_keywords(check_keyword):
+                        parent_keyword.status = "FAIL"
                 check_keyword.messages.create(
                     message=step_info["step_result_html"],
                     timestamp=get_timestamp(),
